@@ -7,6 +7,8 @@ import json
 
 # Example CSV file reading (adjust the path and structure as needed)
 df = pd.read_csv('demoprobs.csv')
+exp = pd.read_csv('conditions.csv')
+
 i = 1
 # Assume df structure like:
 #   Gender, Probability, AgeGroup, Probability, ...
@@ -21,6 +23,16 @@ def select_demographic_state(characteristic):
     """
     states = df[characteristic].dropna().tolist()
     probabilities = df['prob_' + characteristic].dropna().tolist()
+    return np.random.choice(states, p=probabilities)
+
+def experiment(exp_field):
+    """
+    Selects a state for a demographic characteristic based on probabilities.
+    :param characteristic: The demographic characteristic (e.g., 'Gender').
+    :return: The selected state (e.g., 'Male' or 'Female').
+    """
+    states = exp[exp_field].dropna().tolist()
+    probabilities = exp['prob_' + exp_field].dropna().tolist()
     return np.random.choice(states, p=probabilities)
 
 def run_query():    # Example usage
@@ -48,6 +60,9 @@ def run_query():    # Example usage
     proportion = select_demographic_state('proportion')
     scale = select_demographic_state('scale')
     operator = select_demographic_state('operator')
+
+    condition = experiment('condition')
+    resp_format = experiment('response')
     
     global i 
     print(f"Run number {i}")
@@ -58,7 +73,7 @@ def run_query():    # Example usage
 
     # specifies survey question and response format
 
-    user_msg = f"A new energy offer is available which allows you to buy energy directly from homes and businesses with their own solar panels. Energy bought this way is slightly cheaper than what you get from your usual supplier. If you participate, you could meet around {proportion} of your household’s electricity needs through the offer. You would buy electricity directly from homes and businesses located {scale}. You would continue to buy the rest of your energy from your current supplier. Would you sign up to participate in this offer if it was available to you today? Provide your response in JSON. The first JSON object should be a short (<50 word) explanation of your reasoning, called 'explanation', drawing on your demographic, attitudinal, and personality characteristics. Then, output your decision on whether or not you would participate, in a JSON object called 'decision', with response options yes=1 or no=0 (return an integer). Your decision must be consistent with your explanation. Example output as follows: 'explanation': 'explanation text here', 'decision': integer"
+    user_msg = f"{condition} {resp_format}"
 
     print(system_msg)
     print(f"{scale}, {proportion}")

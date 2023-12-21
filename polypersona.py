@@ -57,6 +57,7 @@ def run_query():    # Example usage
     user_msg = f"A new energy offer is available which allows you to buy energy directly from homes and businesses with their own solar panels. Energy bought this way is slightly cheaper than what you get from your usual supplier. If you participate, you could meet around {proportion} of your household’s electricity needs through the offer. You would buy electricity directly from homes and businesses located {scale}. You would continue to buy the rest of your energy from your current supplier. Would you sign up to participate in this offer if it was available to you today? Provide your response in JSON. The first JSON object should be a short (<50 word) explanation of your reasoning, called 'explanation', drawing on your demographic, attitudinal, and personality characteristics. Then, output your decision on whether or not you would participate, in a JSON object called 'decision', with response options yes=1 or no=0 (return an integer). Your decision must be consistent with your explanation. Example output as follows: 'explanation': 'explanation text here', 'decision': integer"
 
     print(system_msg)
+    print(f"{scale}, {proportion}")
 
     client = OpenAI()
 

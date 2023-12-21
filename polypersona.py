@@ -52,7 +52,11 @@ def run_query():    # Example usage
     global i 
     print(f"Run number {i}")
 
+    # configures the characteristics of the responder
+
     system_msg = f"You are a UK householder completing a survey {time}. You are {gender}, aged {age}, with a {income} household income, {household} people in your household, you highest level of education is '{education}', you {occupancy}, and you are a {tenure}. You have these attitudes: {env_conc} environmental concern, {risk} risk aversion, {trust} social trust, {politics} politics, {place} place attachment, {economic} economic rationality, and your innovation adoption status is '{innovation}'. Your personality has traits of {extraversion} extraversion, {agreeableness} agreeableness, {conscientiousness} conscientiousness, {neuroticism} neuroticism, and {openess} openess to new experience."
+
+    # specifies survey question and response format
 
     user_msg = f"A new energy offer is available which allows you to buy energy directly from homes and businesses with their own solar panels. Energy bought this way is slightly cheaper than what you get from your usual supplier. If you participate, you could meet around {proportion} of your household’s electricity needs through the offer. You would buy electricity directly from homes and businesses located {scale}. You would continue to buy the rest of your energy from your current supplier. Would you sign up to participate in this offer if it was available to you today? Provide your response in JSON. The first JSON object should be a short (<50 word) explanation of your reasoning, called 'explanation', drawing on your demographic, attitudinal, and personality characteristics. Then, output your decision on whether or not you would participate, in a JSON object called 'decision', with response options yes=1 or no=0 (return an integer). Your decision must be consistent with your explanation. Example output as follows: 'explanation': 'explanation text here', 'decision': integer"
 
@@ -107,7 +111,7 @@ def run_query():    # Example usage
         'time': time
     })
 
-    print(response_json)
+    # if needed, include: print(response_json)
 
     # Define the CSV file name
     csv_file = 'p2p_rep_data.csv'

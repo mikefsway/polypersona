@@ -1,5 +1,4 @@
 from openai import OpenAI
-# from openai.error import OpenAIError
 import pandas as pd
 import numpy as np
 import csv
@@ -49,32 +48,6 @@ def run_query():    # Example usage
     proportion = select_demographic_state('proportion')
     scale = select_demographic_state('scale')
     operator = select_demographic_state('operator')
-
-    """
-    print(f"gender: {gender}")
-    print(f"age group: {age}")
-    print(f"household income: {income}")
-    print(f"household size: {household}")
-    print(f"highest education: {education}")
-    print(f"occupancy: {occupancy}")
-    print(f"tenure: {tenure}")
-    print(f"environmental concern: {env_conc}")
-    print(f"risk aversion: {risk}")
-    print(f"social trust: {trust}")
-    print(f"place attachment: {place}")
-    print(f"innovation: {innovation}")
-    print(f"economic rationality: {economic}")
-    print(f"politics: {politics}")
-    print(f"extraversion: {extraversion}")
-    print(f"agreeableness: {agreeableness}")
-    print(f"conscientiousness: {conscientiousness}")
-    print(f"neuroticism: {neuroticism}")
-    print(f"openess: {openess}")
-    print(f"Rushing or plenty of time: {time}")
-    print(f"proportion: {proportion}")
-    print(f"scale: {scale}")
-    print(f"operator: {operator}")
-    """
     
     global i 
     print(f"Run number {i}")
@@ -136,7 +109,7 @@ def run_query():    # Example usage
     print(response_json)
 
     # Define the CSV file name
-    csv_file = 'survey_responses_p2p_full_v3.csv'
+    csv_file = 'p2p_rep_data.csv'
 
     # Check if the file exists
     file_exists = os.path.isfile(csv_file)

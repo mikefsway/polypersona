@@ -149,6 +149,8 @@ def run_query():    # Example usage
 
     i = i + 1
 
-while i<600:
+# Change the value of i<x below to determine how many times the code runs, and therefore how many resondents/responses you get. For example, to get 100 responses, each from a different respondent, you would set it to i<101. 
+
+while i<2:
     run_query()
 

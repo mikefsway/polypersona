@@ -25,12 +25,10 @@ def select_demographic_state(characteristic):
     probabilities = df['prob_' + characteristic].dropna().tolist()
     return np.random.choice(states, p=probabilities)
 
+    # Selects a state for the experimental condition and response format.
+
 def experiment(exp_field):
-    """
-    Selects a state for a demographic characteristic based on probabilities.
-    :param characteristic: The demographic characteristic (e.g., 'Gender').
-    :return: The selected state (e.g., 'Male' or 'Female').
-    """
+    
     states = exp[exp_field].dropna().tolist()
     probabilities = exp['prob_' + exp_field].dropna().tolist()
     return np.random.choice(states, p=probabilities)
@@ -57,9 +55,6 @@ def run_query():    # Example usage
     neuroticism = select_demographic_state('neuroticism')
     openess = select_demographic_state('openess')
     time = select_demographic_state('time')
-    proportion = select_demographic_state('proportion')
-    scale = select_demographic_state('scale')
-    operator = select_demographic_state('operator')
 
     condition = experiment('condition')
     resp_format = experiment('response')
@@ -71,12 +66,12 @@ def run_query():    # Example usage
 
     system_msg = f"You are a UK householder completing a survey {time}. You are {gender}, aged {age}, with a {income} household income, {household} people in your household, you highest level of education is '{education}', you {occupancy}, and you are a {tenure}. You have these attitudes: {env_conc} environmental concern, {risk} risk aversion, {trust} social trust, {politics} politics, {place} place attachment, {economic} economic rationality, and your innovation adoption status is '{innovation}'. Your personality has traits of {extraversion} extraversion, {agreeableness} agreeableness, {conscientiousness} conscientiousness, {neuroticism} neuroticism, and {openess} openess to new experience."
 
-    # specifies survey question and response format
+    # survey question and response format as specified in conditions.csv
 
     user_msg = f"{condition} {resp_format}"
 
     print(system_msg)
-    print(f"{scale}, {proportion}")
+    print(condition)
 
     client = OpenAI()
 
@@ -104,6 +99,7 @@ def run_query():    # Example usage
 
         # Add the additional variable values to the JSON data
     response_json.update({
+        'condition': condition,
         'gender': gender,
         'age': age,
         'env_conc': env_conc,
@@ -129,7 +125,7 @@ def run_query():    # Example usage
     # if needed, include: print(response_json)
 
     # Define the CSV file name
-    csv_file = 'p2p_rep_data.csv'
+    csv_file = 'rep_data.csv'
 
     # Check if the file exists
     file_exists = os.path.isfile(csv_file)

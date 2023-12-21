@@ -149,6 +149,6 @@ def run_query():    # Example usage
 
     i = i + 1
 
-while i<2:
+while i<600:
     run_query()
 

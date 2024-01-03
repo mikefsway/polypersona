@@ -1,5 +1,4 @@
 from openai import OpenAI
-# from openai.error import OpenAIError
 import pandas as pd
 import numpy as np
 import csv
@@ -8,6 +7,8 @@ import json
 
 # Example CSV file reading (adjust the path and structure as needed)
 df = pd.read_csv('demoprobs.csv')
+exp = pd.read_csv('conditions.csv')
+
 i = 1
 # Assume df structure like:
 #   Gender, Probability, AgeGroup, Probability, ...
@@ -22,6 +23,14 @@ def select_demographic_state(characteristic):
     """
     states = df[characteristic].dropna().tolist()
     probabilities = df['prob_' + characteristic].dropna().tolist()
+    return np.random.choice(states, p=probabilities)
+
+    # Selects a state for the experimental condition and response format.
+
+def experiment(exp_field):
+    
+    states = exp[exp_field].dropna().tolist()
+    probabilities = exp['prob_' + exp_field].dropna().tolist()
     return np.random.choice(states, p=probabilities)
 
 def run_query():    # Example usage
@@ -46,44 +55,23 @@ def run_query():    # Example usage
     neuroticism = select_demographic_state('neuroticism')
     openess = select_demographic_state('openess')
     time = select_demographic_state('time')
-    proportion = select_demographic_state('proportion')
-    scale = select_demographic_state('scale')
-    operator = select_demographic_state('operator')
 
-    """
-    print(f"gender: {gender}")
-    print(f"age group: {age}")
-    print(f"household income: {income}")
-    print(f"household size: {household}")
-    print(f"highest education: {education}")
-    print(f"occupancy: {occupancy}")
-    print(f"tenure: {tenure}")
-    print(f"environmental concern: {env_conc}")
-    print(f"risk aversion: {risk}")
-    print(f"social trust: {trust}")
-    print(f"place attachment: {place}")
-    print(f"innovation: {innovation}")
-    print(f"economic rationality: {economic}")
-    print(f"politics: {politics}")
-    print(f"extraversion: {extraversion}")
-    print(f"agreeableness: {agreeableness}")
-    print(f"conscientiousness: {conscientiousness}")
-    print(f"neuroticism: {neuroticism}")
-    print(f"openess: {openess}")
-    print(f"Rushing or plenty of time: {time}")
-    print(f"proportion: {proportion}")
-    print(f"scale: {scale}")
-    print(f"operator: {operator}")
-    """
+    condition = experiment('condition')
+    resp_format = experiment('response')
     
     global i 
     print(f"Run number {i}")
 
+    # configures the characteristics of the responder
+
     system_msg = f"You are a UK householder completing a survey {time}. You are {gender}, aged {age}, with a {income} household income, {household} people in your household, you highest level of education is '{education}', you {occupancy}, and you are a {tenure}. You have these attitudes: {env_conc} environmental concern, {risk} risk aversion, {trust} social trust, {politics} politics, {place} place attachment, {economic} economic rationality, and your innovation adoption status is '{innovation}'. Your personality has traits of {extraversion} extraversion, {agreeableness} agreeableness, {conscientiousness} conscientiousness, {neuroticism} neuroticism, and {openess} openess to new experience."
 
-    user_msg = f"A new energy offer is available which allows you to buy energy directly from homes and businesses with their own solar panels. Energy bought this way is slightly cheaper than what you get from your usual supplier. If you participate, you could meet around {proportion} of your household’s electricity needs through the offer. You would buy electricity directly from homes and businesses located {scale}. You would continue to buy the rest of your energy from your current supplier. Would you sign up to participate in this offer if it was available to you today? Provide your response in JSON. The first JSON object should be a short (<50 word) explanation of your reasoning, called 'explanation', drawing on your demographic, attitudinal, and personality characteristics. Then, output your decision on whether or not you would participate, in a JSON object called 'decision', with response options yes=1 or no=0 (return an integer). Your decision must be consistent with your explanation. Example output as follows: 'explanation': 'explanation text here', 'decision': integer"
+    # survey question and response format as specified in conditions.csv
+
+    user_msg = f"{condition} {resp_format}"
 
     print(system_msg)
+    print(condition)
 
     client = OpenAI()
 
@@ -111,6 +99,7 @@ def run_query():    # Example usage
 
         # Add the additional variable values to the JSON data
     response_json.update({
+        'condition': condition,
         'gender': gender,
         'age': age,
         'env_conc': env_conc,
@@ -133,10 +122,10 @@ def run_query():    # Example usage
         'time': time
     })
 
-    print(response_json)
+    # if needed, include: print(response_json)
 
     # Define the CSV file name
-    csv_file = 'survey_responses_p2p_full_v3.csv'
+    csv_file = 'rep_data.csv'
 
     # Check if the file exists
     file_exists = os.path.isfile(csv_file)
@@ -159,6 +148,8 @@ def run_query():    # Example usage
     print("Data saved to CSV successfully.")
 
     i = i + 1
+
+# Change the value of i<x below to determine how many times the code runs, and therefore how many resondents/responses you get. For example, to get 100 responses, each from a different respondent, you would set it to i<101. 
 
 while i<2:
     run_query()

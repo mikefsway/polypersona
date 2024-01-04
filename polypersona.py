@@ -11,15 +11,15 @@ exp = pd.read_csv('conditions.csv')
 
 i = 1
 # Assume df structure like:
-#   Gender, Probability, AgeGroup, Probability, ...
-#   Male, 0.5, 0-18, 0.2, ...
-#   Female, 0.5, 19-35, 0.3, ...
+#   gender, prob_gender, age, prob_age, ...
+#   Male, 0.495, 20, 0.2, ...
+#   Female, 0.495, 30, 0.3, ...
 
 def select_demographic_state(characteristic):
     """
     Selects a state for a demographic characteristic based on probabilities.
-    :param characteristic: The demographic characteristic (e.g., 'Gender').
-    :return: The selected state (e.g., 'Male' or 'Female').
+    :param characteristic: The demographic characteristic (e.g., 'gender').
+    :return: The selected state (e.g., 'male' or 'female').
     """
     states = df[characteristic].dropna().tolist()
     probabilities = df['prob_' + characteristic].dropna().tolist()
@@ -33,7 +33,7 @@ def experiment(exp_field):
     probabilities = exp['prob_' + exp_field].dropna().tolist()
     return np.random.choice(states, p=probabilities)
 
-def run_query():    # Example usage
+def run_query(): 
 
     gender = select_demographic_state('gender')
     age = select_demographic_state('age')
@@ -60,11 +60,11 @@ def run_query():    # Example usage
     resp_format = experiment('response')
     
     global i 
-    print(f"Run number {i}")
+    print(f"Run number {i}")  # allows you to keep track of how many responses have been generated
 
-    # configures the characteristics of the responder
+    # configures the characteristics of the responder. Be sure to specify that the response should be in JSON either here or in the user prompt (set in conditions.csv), or it could cause problems with the response.
 
-    system_msg = f"You are a UK householder completing a survey {time}. You are {gender}, aged {age}, with a {income} household income, {household} people in your household, you highest level of education is '{education}', you {occupancy}, and you are a {tenure}. You have these attitudes: {env_conc} environmental concern, {risk} risk aversion, {trust} social trust, {politics} politics, {place} place attachment, {economic} economic rationality, and your innovation adoption status is '{innovation}'. Your personality has traits of {extraversion} extraversion, {agreeableness} agreeableness, {conscientiousness} conscientiousness, {neuroticism} neuroticism, and {openess} openess to new experience."
+    system_msg = f"You are a UK householder completing a survey {time}. You are {gender}, aged {age}, with a {income} household income, {household} people in your household, you highest level of education is '{education}', you {occupancy}, and you are a {tenure}. You have these attitudes: {env_conc} environmental concern, {risk} risk aversion, {trust} social trust, {politics} politics, {place} place attachment, {economic} economic rationality, and your innovation adoption status is '{innovation}'. Your personality has traits of {extraversion} extraversion, {agreeableness} agreeableness, {conscientiousness} conscientiousness, {neuroticism} neuroticism, and {openess} openness to new experience. You respond in JSON format."
 
     # survey question and response format as specified in conditions.csv
 
@@ -72,6 +72,8 @@ def run_query():    # Example usage
 
     print(system_msg)
     print(condition)
+
+    # prompt to GPT
 
     client = OpenAI()
 

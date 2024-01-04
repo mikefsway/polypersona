@@ -1,4 +1,4 @@
-# polypersona
+# PolyPersona
  This package uses the GPT3.5 API to create a diverse sample of automated survey respondents, which can then respond to survey questions you provide. 
 
  ## Introduction

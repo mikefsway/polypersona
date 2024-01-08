@@ -9,3 +9,9 @@
  
  ## How to use it
  You can set up the demographic, attitudinal, personalility (and any other charateristics you would like to add) in the demoprobs.csv file, along with their probabilities. Likewise, the survey question variations and response formats can be set in conditions.csv. Comments should be self-explanatory in the polypersona.py file. You will need an OpenAI API key, which I suggest you set up as an environment variable according to the instructions in step 2 <a href="https://platform.openai.com/docs/quickstart?context=python">here</a>. 
+
+ ## Development plans
+ Here are the next things I'm hoping to work on when I have the chance.
+ * Sensitivity testing on the effect on replication fidelity of adding/removing respondent characteristics
+ * GUI to provide a single place to edit charateristics/conditions, number of runs, etc.
+ * Support for multiple questions, either in zero-shot or chained prompts

@@ -62,9 +62,13 @@ def run_query():
     global i 
     print(f"Run number {i}")  # allows you to keep track of how many responses have been generated
 
+    demogs = f"You are {gender}, aged {age}, with a {income} household income, {household} people in your household, you highest level of education is '{education}', you {occupancy}, and you are a {tenure}."
+    attitudes = f"You have these attitudes: {env_conc} environmental concern, {risk} risk aversion, {trust} social trust, {politics} politics, {place} place attachment, {economic} economic rationality, and your innovation adoption status is '{innovation}'."
+    personality = f"Your personality has traits of {extraversion} extraversion, {agreeableness} agreeableness, {conscientiousness} conscientiousness, {neuroticism} neuroticism, and {openess} openness to new experience."
+    
     # configures the characteristics of the responder
 
-    system_msg = f"You are a UK householder completing a survey {time}. You are {gender}, aged {age}, with a {income} household income, {household} people in your household, you highest level of education is '{education}', you {occupancy}, and you are a {tenure}. You have these attitudes: {env_conc} environmental concern, {risk} risk aversion, {trust} social trust, {politics} politics, {place} place attachment, {economic} economic rationality, and your innovation adoption status is '{innovation}'. Your personality has traits of {extraversion} extraversion, {agreeableness} agreeableness, {conscientiousness} conscientiousness, {neuroticism} neuroticism, and {openess} openness to new experience."
+    system_msg = f"You are a UK householder completing a survey {time}. {demogs} {attitudes} {personality}"
 
     # survey question and response format as specified in conditions.csv
 

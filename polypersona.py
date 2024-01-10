@@ -68,7 +68,10 @@ def run_query():
     
     # configures the characteristics of the responder
 
-    system_msg = f"You are a UK householder completing a survey {time}. {demogs} {attitudes} {personality}"
+    # test 1: system_msg = f"You are a UK householder completing a survey." # {time}. {demogs} {attitudes} {personality}"
+    # test 2: system_msg = f"You are a UK householder completing a survey. {demogs}"
+    # test 3: system_msg = f"You are a UK householder completing a survey. {attitudes}"
+    system_msg = f"You are a UK householder completing a survey. {personality}"
 
     # survey question and response format as specified in conditions.csv
 
@@ -157,6 +160,6 @@ def run_query():
 
 # Change the value of i<x below to determine how many times the code runs, and therefore how many resondents/responses you get. For example, to get 100 responses, each from a different respondent, you would set it to i<101. 
 
-while i<2:
+while i<600:
     run_query()
 

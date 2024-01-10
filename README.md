@@ -1,5 +1,5 @@
 # PolyPersona
- This package uses the GPT3.5 API to create a diverse sample of automated survey respondents, which can then respond to survey questions you provide. 
+ This package uses the GPT3.5 API to create a diverse sample of automated survey respondents, which can then respond to survey questions you provide. You can see a preprint of a paper describing work using the approach [here](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4686345).
 
  ## Introduction
  I'm a social researcher in energy, and I occasionally need to run social surveys and survey experiments. I'm interested in exploring whether Large Language Models (LLMs) can usefully simulate survey responses. This could be helpful in making sure questions are clearly phrased, anticipating what could be the most effective experimental conditions to try for real, and perhaps even using in place of social surveys where the application would make a survey impractical.

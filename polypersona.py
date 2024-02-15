@@ -80,7 +80,8 @@ def run_query():
     try:
         completion = client.chat.completions.create(
             # model="gpt-4-1106-preview",
-            model="gpt-3.5-turbo-1106",
+            # model="gpt-3.5-turbo-1106",
+            model="gpt-3.5-turbo-0125", # this is the current latest, cheapest version of 3.5 (1106 was the one used in previous studies)
             response_format={ "type": "json_object" },
             messages=[
                 {"role": "system", "content": system_msg},
